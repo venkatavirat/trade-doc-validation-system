@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quinto — Validation Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Montserrat', 'system-ui', 'sans-serif'] },
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-family: Montserrat, sans-serif;
+            scrollbar-width: none;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .risk-circle {
+            background: conic-gradient(#ef4444 72%, transparent 0);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body class="bg-[#0d1024] text-white antialiased min-h-screen relative overflow-y-auto pb-10">
+
+    <div class="fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+            style="background-image: url('https://images.unsplash.com/photo-1605745341112-85968b19335b?auto=format&fit=crop&w=2400&q=85');">
+        </div>
+        <div class="absolute inset-0 bg-[#0d1024]/80 backdrop-blur-[2px]"></div>
+    </div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-6 pt-10">
+        <div class="flex flex-col items-center justify-center mb-10 border-b border-white/20 pb-6 relative">
+            <span class="text-[9px] font-black uppercase tracking-[0.3em] text-blue-400 mb-2">Powered by Quinto
+                AI</span>
+            <h1 class="text-center text-4xl md:text-5xl font-black uppercase tracking-tighter text-white">
+                Quinto Validation Report
+            </h1>
+            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 mt-2">Shipment Ref: TRD-2026-8891A
+            </p>
+        </div>
+
+        <div class="flex flex-col md:flex-row items-center justify-center gap-10 mb-12">
+
+            <div class="relative flex items-center justify-center h-48 w-48 shrink-0">
+                <div class="absolute inset-0 risk-circle opacity-30 blur-md"></div>
+                <div
+                    class="absolute inset-2 rounded-full border-4 border-red-500/50 flex flex-col items-center justify-center bg-[#1a1b41]/40 backdrop-blur-md shadow-[0_0_40px_rgba(239,68,68,0.25)]">
+                    <span class="text-5xl font-black text-red-500">72<span
+                            class="text-xl text-red-500/50">%</span></span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-red-400 mt-1">Risk Score</span>
+                </div>
+                <svg class="absolute inset-0 h-48 w-48 -rotate-90">
+                    <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="8" fill="transparent"
+                        class="text-red-500" stroke-dasharray="552" stroke-dashoffset="154" stroke-linecap="round" />
+                </svg>
+            </div>
+
+            <div class="flex-1 w-full max-w-md grid grid-cols-2 gap-4">
+                <div
+                    class="border border-white/25 bg-white/5 p-4 flex flex-col items-center justify-center text-center backdrop-blur-md transition hover:bg-white/10">
+                    <p class="text-[10px] font-bold text-white/60 uppercase tracking-wider mb-1">Fields Checked</p>
+                    <p class="text-3xl font-black text-white">45</p>
+                </div>
+                <div
+                    class="border border-white/25 bg-white/5 p-4 flex flex-col items-center justify-center text-center backdrop-blur-md transition hover:bg-white/10">
+                    <p class="text-[10px] font-bold text-white/60 uppercase tracking-wider mb-1">Mismatched</p>
+                    <p class="text-3xl font-black text-red-400">02</p>
+                </div>
+                <div
+                    class="border border-white/25 bg-white/5 p-4 flex flex-col items-center justify-center text-center backdrop-blur-md transition hover:bg-white/10">
+                    <p class="text-[10px] font-bold text-white/60 uppercase tracking-wider mb-1">Missing</p>
+                    <p class="text-3xl font-black text-yellow-500">01</p>
+                </div>
+                <div
+                    class="border border-white/25 bg-white/5 p-4 flex flex-col items-center justify-center text-center backdrop-blur-md transition hover:bg-white/10">
+                    <p class="text-[10px] font-bold text-white/60 uppercase tracking-wider mb-1">Total Docs</p>
+                    <p class="text-3xl font-black text-blue-300">05</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="border border-white/25 bg-[#1a1b41]/40 backdrop-blur-md overflow-hidden shadow-xl">
+            <div class="bg-white/5 p-4 border-b border-white/20 flex items-center justify-between">
+                <h2 class="text-xs font-black uppercase tracking-widest text-red-400">Detected Discrepancies</h2>
+                <span class="text-[9px] font-bold uppercase tracking-wider text-blue-300 flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
+                    Quinto AI Fix Suggestions Active
+                </span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-[11px] text-left border-collapse">
+                    <thead>
+                        <tr class="bg-black/30 text-white/60 uppercase tracking-wider">
+                            <th class="p-4 font-bold border-r border-white/10 w-[10%]">Error Code</th>
+                            <th class="p-4 font-bold border-r border-white/10 w-[20%]">Error Type</th>
+                            <th class="p-4 font-bold border-r border-white/10 w-[25%]">Occurs In</th>
+                            <th class="p-4 font-bold border-r border-white/10 text-center w-[10%]">Status</th>
+                            <th class="p-4 font-bold text-blue-300 w-[35%]">AI Suggested Fix</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/10 font-medium">
+                        <tr class="hover:bg-white/5 transition bg-red-500/10">
+                            <td class="p-4 font-black text-white border-r border-white/10">ERR-001</td>
+                            <td class="p-4 border-r border-white/10 text-white/90">
+                                <span class="block font-bold">Gross Weight Variance</span>
+                                <span class="text-[9px] text-white/50 block mt-1">1050 kg vs 1005 kg</span>
+                            </td>
+                            <td class="p-4 border-r border-white/10 text-white/80">Packing List, Bill of Lading</td>
+                            <td class="p-4 text-center border-r border-white/10">
+                                <span
+                                    class="inline-block text-[9px] px-3 py-1 bg-red-500/20 text-red-400 border border-red-500/40 font-black uppercase tracking-wider shadow-[0_0_10px_rgba(239,68,68,0.2)]">Mismatch</span>
+                            </td>
+                            <td class="p-4 text-blue-100/90 leading-relaxed bg-blue-900/20">
+                                Update Bill of Lading weight from <span class="font-bold text-white">1050kg</span> to
+                                <span class="font-bold text-emerald-300">1005kg</span> to match the Commercial Invoice
+                                and Packing List.
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-white/5 transition bg-yellow-500/10">
+                            <td class="p-4 font-black text-white border-r border-white/10">ERR-002</td>
+                            <td class="p-4 border-r border-white/10 text-white/90">
+                                <span class="block font-bold">Entity Missing</span>
+                                <span class="text-[9px] text-white/50 block mt-1">Consignee Name Not Found</span>
+                            </td>
+                            <td class="p-4 border-r border-white/10 text-white/80">Certificate of Origin</td>
+                            <td class="p-4 text-center border-r border-white/10">
+                                <span
+                                    class="inline-block text-[9px] px-3 py-1 bg-yellow-500/20 text-yellow-500 border border-yellow-500/40 font-black uppercase tracking-wider shadow-[0_0_10px_rgba(234,179,8,0.2)]">Missing</span>
+                            </td>
+                            <td class="p-4 text-blue-100/90 leading-relaxed bg-blue-900/20">
+                                Amend Certificate of Origin to explicitly include the Consignee entity <span
+                                    class="font-bold text-white">('Global Imports Inc')</span> before final submission.
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-white/5 transition bg-red-500/10">
+                            <td class="p-4 font-black text-white border-r border-white/10">ERR-003</td>
+                            <td class="p-4 border-r border-white/10 text-white/90">
+                                <span class="block font-bold">Inconsistent Value</span>
+                                <span class="text-[9px] text-white/50 block mt-1">Total Value: $45,000 vs $45,500</span>
+                            </td>
+                            <td class="p-4 border-r border-white/10 text-white/80">Commercial Invoice, Customs Decl.
+                            </td>
+                            <td class="p-4 text-center border-r border-white/10">
+                                <span
+                                    class="inline-block text-[9px] px-3 py-1 bg-red-500/20 text-red-400 border border-red-500/40 font-black uppercase tracking-wider shadow-[0_0_10px_rgba(239,68,68,0.2)]">Mismatch</span>
+                            </td>
+                            <td class="p-4 text-blue-100/90 leading-relaxed bg-blue-900/20">
+                                Correct total value on Customs Declaration from <span
+                                    class="font-bold text-white">$45,500</span> to <span
+                                    class="font-bold text-emerald-300">$45,000</span>.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quinto — Document Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Montserrat', 'system-ui', 'sans-serif'] },
+                },
+            },
+        };
+    </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: Montserrat, system-ui, sans-serif;
+        }
+    </style>
+</head>
+
+<body class="h-screen antialiased text-white" x-data="logisticsHub()">
+
+    <div class="fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+            style="background-image: url('https://images.unsplash.com/photo-1605745341112-85968b19335b?auto=format&fit=crop&w=2400&q=85');">
+        </div>
+        <div class="absolute inset-0 bg-[#0d1024]/80 backdrop-blur-[1px]"></div>
+    </div>
+
+    <header class="fixed top-0 left-0 z-50 p-6">
+        <div class="flex items-center gap-3 border border-white/20 bg-white/5 px-4 py-2.5 backdrop-blur-md rounded-sm">
+            <svg class="w-7 h-7 text-blue-400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="8" stroke-dasharray="210 100" />
+                <path d="M72.2843 72.2843L90 90" stroke="currentColor" stroke-width="8" stroke-linecap="round" />
+                <rect x="35" y="30" width="22" height="22" rx="2" stroke="currentColor" stroke-width="6" />
+                <rect x="43" y="38" width="22" height="22" rx="2" fill="#0d1024" stroke="currentColor"
+                    stroke-width="6" />
+            </svg>
+            <div class="flex flex-col">
+                <span class="text-xl font-black text-white leading-none tracking-tight">QUINTO</span>
+                <span class="text-[8px] font-bold text-blue-400 uppercase tracking-widest leading-none">Validation
+                    AI</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="relative z-10 flex h-screen w-full flex-col items-center justify-center overflow-hidden px-4 sm:px-6 pt-24 pb-12">
+        <div class="flex w-full max-w-5xl flex-col items-center gap-6">
+
+            <div class="flex flex-col items-center justify-center relative text-center">
+                <h1 class="text-3xl font-black uppercase leading-none tracking-tight text-white/70 md:text-4xl">
+                    Quinto Document Hub
+                </h1>
+                <p class="text-[10px] font-medium uppercase tracking-[0.2em] text-white/50 mt-1">Cross-Check & Validate Shipment Files</p>
+            </div>
+
+            <section class="w-full shrink-0">
+                <div class="flex flex-col items-stretch gap-4 lg:flex-row lg:items-center lg:justify-between">
+                    <div class="flex-1 border border-white/25 bg-white/10 p-3 backdrop-blur-md">
+                        <label class="block text-[9px] font-bold uppercase tracking-[0.2em] text-white/65">Country of Origin</label>
+                        <select x-model="origin" class="mt-2 w-full appearance-none border border-white/25 bg-[#1a1b41]/50 px-3 py-2 text-xs font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/50">
+                            <template x-for="c in countries" :key="c">
+                                <option x-text="c" :value="c" class="bg-[#12152c]"></option>
+                            </template>
+                        </select>
+                    </div>
+                    <div class="flex items-center justify-center px-2 text-white">
+                        <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </div>
+                    <div class="flex-1 border border-white/25 bg-white/10 p-3 backdrop-blur-md">
+                        <label class="block text-[9px] font-bold uppercase tracking-[0.2em] text-white/65">Destination</label>
+                        <select x-model="destination" class="mt-2 w-full appearance-none border border-white/25 bg-[#1a1b41]/50 px-3 py-2 text-xs font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/50">
+                            <template x-for="c in countries" :key="c">
+                                <option x-text="c" :value="c" class="bg-[#12152c]"></option>
+                            </template>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <main class="flex w-full flex-col gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <template x-for="(doc, index) in documents.slice(0, 3)" :key="doc.id">
+                        <div class="relative group">
+                            <button x-show="doc.uploaded" @click.stop="doc.uploaded = false"
+                                class="absolute right-2 top-2 z-20 bg-red-500/80 hover:bg-red-600 text-white p-1 rounded transition duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                            <button @click="markUploaded(index)"
+                                class="w-full relative flex min-h-[155px] flex-col items-center justify-center border p-4 text-center backdrop-blur-md transition duration-300"
+                                :class="doc.uploaded ? 'border-2 border-blue-400 bg-blue-950/55 shadow-[0_0_24px_rgba(96,165,250,0.25)]' : 'border-white/30 bg-[#1a1b41]/70 hover:bg-[#1a1b41]/85'">
+                                <span class="absolute right-2 top-2 border border-white/30 bg-white/15 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-wider" x-show="!doc.uploaded">Required</span>
+                                <div x-show="!doc.uploaded" class="flex flex-col items-center">
+                                    <span class="mb-2 flex h-8 w-8 items-center justify-center border border-white/35 bg-white/10 text-xl font-light">+</span>
+                                    <span class="text-[10px] font-bold uppercase tracking-wide" x-text="doc.label"></span>
+                                    <span class="mt-2 text-[7px] font-black text-blue-400 uppercase tracking-widest border border-blue-400/30 px-2 py-0.5 bg-blue-400/5">.PDF ONLY</span>
+                                </div>
+                                <div x-show="doc.uploaded" class="flex flex-col items-center gap-1">
+                                    <svg class="h-7 w-7 text-sky-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25">
+                                        <path d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <span class="text-[9px] font-black uppercase opacity-70">UPLOADED</span>
+                                    <span class="text-[8px] font-bold text-white/90" x-text="doc.label"></span>
+                                </div>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-center gap-6">
+                    <template x-for="(doc, i) in documents.slice(3, 5)" :key="doc.id">
+                        <div class="relative group w-full md:w-1/3">
+                            <button x-show="doc.uploaded" @click.stop="doc.uploaded = false"
+                                class="absolute right-2 top-2 z-20 bg-red-500/80 hover:bg-red-600 text-white p-1 rounded transition duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                            <button @click="markUploaded(3 + i)"
+                                class="w-full relative flex min-h-[155px] flex-col items-center justify-center border p-4 text-center backdrop-blur-md transition duration-300"
+                                :class="doc.uploaded ? 'border-2 border-blue-400 bg-blue-950/55 shadow-[0_0_24px_rgba(96,165,250,0.25)]' : 'border-white/30 bg-[#1a1b41]/70 hover:bg-[#1a1b41]/85'">
+                                <span class="absolute right-2 top-2 border border-white/30 bg-white/15 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-wider" x-show="!doc.uploaded">Required</span>
+                                <div x-show="!doc.uploaded" class="flex flex-col items-center">
+                                    <span class="mb-2 flex h-8 w-8 items-center justify-center border border-white/35 bg-white/10 text-xl font-light">+</span>
+                                    <span class="text-[10px] font-bold uppercase tracking-wide" x-text="doc.label"></span>
+                                    <span class="mt-2 text-[7px] font-black text-blue-400 uppercase tracking-widest border border-blue-400/30 px-2 py-0.5 bg-blue-400/5">.PDF ONLY</span>
+                                </div>
+                                <div x-show="doc.uploaded" class="flex flex-col items-center gap-1">
+                                    <svg class="h-7 w-7 text-sky-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25">
+                                        <path d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <span class="text-[9px] font-black uppercase opacity-70">UPLOADED</span>
+                                    <span class="text-[8px] font-bold text-white/90" x-text="doc.label"></span>
+                                </div>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="flex justify-center pt-4">
+                    <div x-cloak x-show="allUploaded" x-transition class="w-full max-w-sm">
+                        <button type="button" @click="startAnalysis()"
+                            class="w-full border border-blue-400/30 bg-blue-600/10 px-4 py-3 text-[10px] font-black uppercase tracking-[0.18em] transition hover:bg-blue-600/20 active:scale-95 shadow-[0_0_30px_rgba(37,99,235,0.2)] text-blue-300">
+                            <span x-text="loading ? 'PROCESSING MATRIX...' : 'GENERATE QUINTO REPORT'"></span>
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function logisticsHub() {
+            return {
+                origin: 'United States of America',
+                destination: 'United Arab Emirates',
+                countries: ['United States of America', 'United Arab Emirates', 'United Kingdom', 'India', 'China'],
+                documents: [
+                    { id: 'ci', label: 'Commercial Invoice', uploaded: false },
+                    { id: 'pl', label: 'Packing List', uploaded: false },
+                    { id: 'bol', label: 'Bill of Lading', uploaded: false },
+                    { id: 'coo', label: 'Certificate of Origin', uploaded: false },
+                    { id: 'cd', label: 'Customs Declaration', uploaded: false },
+                ],
+                loading: false,
+                get allUploaded() { return this.documents.every(d => d.uploaded); },
+                markUploaded(index) { this.documents[index].uploaded = true; },
+                startAnalysis() {
+                    this.loading = true;
+                    // Simply redirects to the local results file after 1.5s
+                    setTimeout(() => {
+                        window.location.href = 'output.html';
+                    }, 1500);
+                }
+            };
+        }
+    </script>
+</body>
+
+</html>
